@@ -1,0 +1,14 @@
+{
+  "name": "Vue 3 + Vite",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:0-16",
+  "forwardPorts": [5173],
+  "postCreateCommand": "npm install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Vue.volar",
+        "Vue.vscode-typescript-vue-plugin"
+      ]
+    }
+  }
+}

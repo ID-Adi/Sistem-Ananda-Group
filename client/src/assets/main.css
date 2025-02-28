@@ -1,0 +1,98 @@
+@import './theme.css';
+
+body {
+  font-family: 'Inter', 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+}
+
+.v-application {
+  font-family: 'Inter', 'Roboto', sans-serif !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.text-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.border-radius-md {
+  border-radius: 8px;
+}
+
+.border-radius-lg {
+  border-radius: 12px;
+}
+
+.border-radius-xl {
+  border-radius: 16px;
+}
+
+.transition-default {
+  transition: all 0.3s ease;
+}
+
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+.hover-shadow {
+  transition: box-shadow 0.3s ease;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.font-weight-medium {
+  font-weight: 500 !important;
+}
+
+.font-weight-semibold {
+  font-weight: 600 !important;
+}
+
+.text-small {
+  font-size: 0.875rem !important;
+}
+
+.text-smaller {
+  font-size: 0.75rem !important;
+}
+
+.text-smallest {
+  font-size: 0.7rem !important;
+}
+
+.text-larger {
+  font-size: 1.125rem !important;
+}
+
+.text-largest {
+  font-size: 1.25rem !important;
+}
+
+.v-card {
+  border-radius: 12px;
+}
+
+.v-btn {
+  letter-spacing: 0.5px;
+}
+
+.v-btn--rounded {
+  border-radius: 8px;
+}
+
+.v-btn--pill {
+  border-radius: 9999px;
+}

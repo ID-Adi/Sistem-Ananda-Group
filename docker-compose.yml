@@ -1,0 +1,26 @@
+version: '3'
+services:
+  server:
+    build: ./server
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    restart: unless-stopped
+
+  client:
+    build: ./client
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_SUPABASE_URL=https://hrfmpheljdfrxjwbwjyh.supabase.co
+      - VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhyZm1waGVsamRmcnhqd2J3anloIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA2NjIxMjQsImV4cCI6MjA1NjIzODEyNH0.w_ytz6FHK8-pevsiJNWAFAsY3_8zgNS4unX20aCksx8
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    depends_on:
+      - server
+    restart: unless-stopped
