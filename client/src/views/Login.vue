@@ -100,6 +100,8 @@
               height="48"
               color="grey-darken-1"
               @click="handleGoogleLogin"
+              :loading="loading"
+              :disabled="loading"
             >
               Log in with Google
             </v-btn>
@@ -198,18 +200,25 @@ export default {
     }
     
     const handleGoogleLogin = async () => {
+      loading.value = true
+      errorMessage.value = ''
+      
       try {
-        const { error } = await supabase.auth.signInWithOAuth({
+        const { data, error } = await supabase.auth.signInWithOAuth({
           provider: 'google',
           options: {
-            redirectTo: window.location.origin + '/dashboard'
+            redirectTo: `${window.location.origin}/dashboard`
           }
         })
         
         if (error) throw error
+        
+        // Tidak perlu redirect manual karena Supabase akan menangani redirect
+        console.log('Redirecting to Google OAuth...', data)
       } catch (error) {
         console.error('Error Google login:', error.message)
         errorMessage.value = error.message || 'Failed to login with Google. Please try again.'
+        loading.value = false
       }
     }
     

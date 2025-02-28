@@ -114,6 +114,8 @@
               height="48"
               color="grey-darken-1"
               @click="handleGoogleSignUp"
+              :loading="loading"
+              :disabled="loading"
             >
               Sign up with Google
             </v-btn>
@@ -202,18 +204,26 @@ export default {
     }
     
     const handleGoogleSignUp = async () => {
+      loading.value = true
+      errorMessage.value = ''
+      successMessage.value = ''
+      
       try {
-        const { error } = await supabase.auth.signInWithOAuth({
+        const { data, error } = await supabase.auth.signInWithOAuth({
           provider: 'google',
           options: {
-            redirectTo: window.location.origin + '/dashboard'
+            redirectTo: `${window.location.origin}/dashboard`
           }
         })
         
         if (error) throw error
+        
+        // Tidak perlu redirect manual karena Supabase akan menangani redirect
+        console.log('Redirecting to Google OAuth...', data)
       } catch (error) {
         console.error('Error Google sign up:', error.message)
         errorMessage.value = error.message || 'Failed to sign up with Google. Please try again.'
+        loading.value = false
       }
     }
 
