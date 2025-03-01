@@ -11,8 +11,8 @@
                 <v-spacer></v-spacer>
               </div>
 
-              <div class="d-flex">
-                <div class="flex-grow-1 pr-6">
+              <div>
+                <div class="flex-grow-1">
                   <p class="text-subtitle-1 text-grey mb-8">Register your account</p>
 
                   <v-alert v-if="errorMessage" type="error" class="mb-4" density="compact" variant="tonal">
@@ -71,7 +71,7 @@
                       :loading="loading"
                       :disabled="loading"
                     >
-                      <v-icon color="success" class="mr-2">mdi-google</v-icon>
+                      <v-icon color="#4285F4" class="mr-2">$vuetify.icons.values.google</v-icon>
                       <span class="text-success">{{ isSignUp ? 'Sign up with Google' : 'Login with Google' }}</span>
                     </v-btn>
 
@@ -88,19 +88,6 @@
                       </a>
                     </div>
                   </v-form>
-                </div>
-
-                <div class="d-none d-md-flex align-center justify-center">
-                  <div class="illustration-container">
-                    <img 
-                      :src="anandaLogo" 
-                      alt="Ananda Group Logo"
-                      class="ananda-logo login-illustration"
-                    />
-                    <div class="floating-circle circle-1"></div>
-                    <div class="floating-circle circle-2"></div>
-                    <div class="floating-circle circle-3"></div>
-                  </div>
                 </div>
               </div>
             </v-col>
@@ -148,7 +135,6 @@
 import { ref } from 'vue'
 import { supabase } from '../supabase'
 import { useRouter } from 'vue-router'
-import { anandaLogoBase64 } from '../assets/ananda-logo.js'
 
 export default {
   name: 'LoginView',
@@ -161,7 +147,6 @@ export default {
     const errorMessage = ref('')
     const form = ref(null)
     const isSignUp = ref(false)
-    const anandaLogo = ref(anandaLogoBase64)
     
     // Reset password
     const resetDialog = ref(false)
@@ -281,7 +266,6 @@ export default {
       toggleSignUp,
       handleLogin,
       handleGoogleLogin,
-      anandaLogo,
       // Reset password
       resetDialog,
       resetEmail,
@@ -365,65 +349,5 @@ export default {
 .modern-input:focus-within {
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-}
-
-.illustration-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.ananda-logo {
-  width: 220px;
-  height: auto;
-}
-
-.floating-circle {
-  position: absolute;
-  border-radius: 50%;
-  z-index: 1;
-  animation: float 6s ease-in-out infinite;
-}
-
-.circle-1 {
-  width: 80px;
-  height: 80px;
-  background: rgba(251, 186, 9, 0.1);
-  top: 20%;
-  left: 10%;
-  animation-delay: 0s;
-}
-
-.circle-2 {
-  width: 60px;
-  height: 60px;
-  background: rgba(245, 158, 11, 0.1);
-  bottom: 20%;
-  right: 15%;
-  animation-delay: 1s;
-}
-
-.circle-3 {
-  width: 40px;
-  height: 40px;
-  background: rgba(217, 119, 6, 0.1);
-  top: 60%;
-  left: 20%;
-  animation-delay: 2s;
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
 }
 </style>
