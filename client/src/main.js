@@ -53,10 +53,7 @@ const vuetify = createVuetify({
     aliases,
     sets: {
       mdi,
-    },
-    values: {
-      google: 'mdi-google-plus',
-    },
+    }
   },
 })
 

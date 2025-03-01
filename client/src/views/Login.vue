@@ -5,15 +5,14 @@
         <v-card class="mx-auto rounded-xl login-card" elevation="10" max-width="700">
           <v-row>
             <v-col cols="12" class="pa-10">
-              <div class="d-flex align-center mb-8">
-                <v-icon color="amber-darken-2" size="36" class="mr-2">mdi-view-dashboard-outline</v-icon>
-                <span class="text-h5 font-weight-bold ananda-text">ANANDA GROUP</span>
-                <v-spacer></v-spacer>
+              <div class="text-center mb-8">
+                <v-icon color="amber-darken-2" size="36" class="mb-2">mdi-view-dashboard-outline</v-icon>
+                <div class="text-h5 font-weight-bold ananda-text">ANANDA GROUP</div>
               </div>
 
               <div>
                 <div class="flex-grow-1">
-                  <p class="text-subtitle-1 text-grey mb-8">Register your account</p>
+                  <p class="text-subtitle-1 text-grey mb-8 text-center">Register your account</p>
 
                   <v-alert v-if="errorMessage" type="error" class="mb-4" density="compact" variant="tonal">
                     {{ errorMessage }}
@@ -71,7 +70,7 @@
                       :loading="loading"
                       :disabled="loading"
                     >
-                      <v-icon color="#4285F4" class="mr-2">$vuetify.icons.values.google</v-icon>
+                      <v-icon color="#4285F4" class="mr-2">mdi-google</v-icon>
                       <span class="text-success">{{ isSignUp ? 'Sign up with Google' : 'Login with Google' }}</span>
                     </v-btn>
 
