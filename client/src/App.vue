@@ -78,8 +78,12 @@ export default {
         if (event === 'SIGNED_IN') {
           user.value = session?.user || null
           
+          console.log('User signed in:', user.value.email)
+          
           // Periksa apakah email diizinkan
           const allowed = await isEmailAllowed(user.value.email)
+          console.log('Email allowed?', allowed)
+          
           if (!allowed) {
             // Jika email tidak diizinkan, logout
             await supabase.auth.signOut()

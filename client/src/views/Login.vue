@@ -207,18 +207,30 @@ export default {
       loading.value = true
       errorMessage.value = ''
       
+      console.log('Memulai proses login Google...')
+      
       try {
+        // Menampilkan URL aplikasi
+        console.log('URL Aplikasi:', window.location.origin)
+        
         const { data, error } = await supabase.auth.signInWithOAuth({
           provider: 'google',
           options: {
-            redirectTo: `${window.location.origin}/dashboard`
+            redirectTo: window.location.origin, // Mengubah redirect URL agar lebih sederhana
+            scopes: 'email profile' // Menambahkan scopes yang diminta
           }
         })
         
-        if (error) throw error
+        if (error) {
+          console.error('Error detail:', error)
+          throw error
+        }
+        
+        console.log('Hasil login Google:', data)
+        // Router guard akan menangani redirect
       } catch (error) {
-        console.error('Error login dengan Google:', error.message)
-        errorMessage.value = error.message || 'Failed to login with Google. Please try again.'
+        console.error('Error login dengan Google:', error)
+        errorMessage.value = 'Gagal login dengan Google: ' + (error.message || 'Silakan coba lagi')
       } finally {
         loading.value = false
       }
