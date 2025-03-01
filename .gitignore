@@ -1,12 +1,30 @@
-# Dependency directories
-node_modules/
-jspm_packages/
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Build outputs
-dist/
-build/
-out/
-.next/
+# Dependencies
+node_modules
+.DS_Store
+dist
+dist-ssr
+coverage
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # Environment variables
 .env
@@ -15,67 +33,25 @@ out/
 .env.test.local
 .env.production.local
 
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Supabase
+.supabase
 
-# Coverage directory used by tools like istanbul
-coverage/
-
-# Cache directories
-.npm
-.eslintcache
-.cache
-.parcel-cache
-
-# Editor directories and files
-.idea/
-.vscode/
-*.swp
-*.swo
-.DS_Store
-*.sublime-project
-*.sublime-workspace
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Docker
-docker-data/
-*.env.docker
-
-# Database
-*.sqlite
-*.sqlite3
-*.db
+# Build outputs
+/dist/
+/build/
 
 # Temporary files
-tmp/
-temp/
+temp
+.temp
+*.tmp
 
-# Compiled files
-*.com
-*.class
-*.dll
-*.exe
-*.o
-*.so
+# IDE specific files
+.vscode-test
+.history/
+*.vsix
 
-# Package files
-*.7z
-*.dmg
-*.gz
-*.iso
-*.jar
-*.rar
-*.tar
-*.zip
+# OS specific files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/

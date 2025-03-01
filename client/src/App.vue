@@ -28,6 +28,7 @@
 import { supabase } from './supabase'
 import { useRouter } from 'vue-router'
 import { onMounted, ref, provide } from 'vue'
+import { isEmailAllowed } from './utils/emailAccess'
 
 export default {
   name: 'App',
@@ -58,12 +59,36 @@ export default {
       const { data } = await supabase.auth.getSession()
       user.value = data?.session?.user || null
 
+      // Jika user sudah login, periksa apakah emailnya diizinkan
+      if (user.value) {
+        const allowed = await isEmailAllowed(user.value.email)
+        if (!allowed) {
+          // Jika email tidak diizinkan, logout
+          await supabase.auth.signOut()
+          user.value = null
+          showNotification('Akun Anda tidak diizinkan mengakses aplikasi ini', 'error', 5000)
+          router.push('/')
+        }
+      }
+
       // Subscribe ke perubahan auth state
-      supabase.auth.onAuthStateChange((event, session) => {
+      supabase.auth.onAuthStateChange(async (event, session) => {
         console.log('Auth state changed:', event)
         
         if (event === 'SIGNED_IN') {
           user.value = session?.user || null
+          
+          // Periksa apakah email diizinkan
+          const allowed = await isEmailAllowed(user.value.email)
+          if (!allowed) {
+            // Jika email tidak diizinkan, logout
+            await supabase.auth.signOut()
+            user.value = null
+            showNotification('Akun Anda tidak diizinkan mengakses aplikasi ini', 'error', 5000)
+            router.push('/')
+            return
+          }
+          
           showNotification('Login berhasil', 'success')
           router.push('/dashboard')
         } else if (event === 'SIGNED_OUT') {

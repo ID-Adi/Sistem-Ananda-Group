@@ -21,13 +21,28 @@ const vuetify = createVuetify({
     themes: {
       light: {
         colors: {
-          primary: '#D4AF37',
-          secondary: '#800000',
-          accent: '#B8860B',
-          error: '#F44336',
-          info: '#2196F3',
-          success: '#4CAF50',
-          warning: '#FFC107',
+          primary: '#FBBA09',        // Ananda Group primary color (amber)
+          secondary: '#F59E0B',      // Secondary amber tone
+          accent: '#D97706',         // Darker amber for accents
+          error: '#EF4444',
+          info: '#3B82F6',
+          success: '#10B981',
+          warning: '#F59E0B',
+          background: '#F5F5F5',
+          surface: '#FFFFFF',
+        },
+      },
+      dark: {
+        colors: {
+          primary: '#FBBA09',        // Ananda Group primary color (amber)
+          secondary: '#F59E0B',      // Secondary amber tone
+          accent: '#D97706',         // Darker amber for accents
+          error: '#F87171',
+          info: '#60A5FA',
+          success: '#34D399',
+          warning: '#FBBF24',
+          background: '#121212',
+          surface: '#1E1E1E',
         },
       },
     },

@@ -123,6 +123,31 @@ CREATE TABLE IF NOT EXISTS sales_order_items (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+-- Membuat tabel untuk daftar email yang diizinkan mengakses aplikasi
+CREATE TABLE IF NOT EXISTS allowed_emails (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  email TEXT NOT NULL UNIQUE,
+  description TEXT,
+  is_active BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- Menerapkan trigger untuk updated_at pada tabel allowed_emails
+DROP TRIGGER IF EXISTS set_timestamp_allowed_emails ON allowed_emails;
+CREATE TRIGGER set_timestamp_allowed_emails
+BEFORE UPDATE ON allowed_emails
+FOR EACH ROW
+EXECUTE FUNCTION update_modified_column();
+
+-- Membuat fungsi untuk memeriksa apakah email diizinkan
+CREATE OR REPLACE FUNCTION is_allowed_email(email TEXT)
+RETURNS BOOLEAN AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM allowed_emails WHERE email = $1 AND is_active = TRUE
+  );
+$$ LANGUAGE sql SECURITY DEFINER;
+
 -- Membuat trigger untuk otomatis mengupdate updated_at
 CREATE OR REPLACE FUNCTION update_modified_column()
 RETURNS TRIGGER AS $$
@@ -133,26 +158,31 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Menerapkan trigger ke tabel-tabel yang memiliki kolom updated_at
+DROP TRIGGER IF EXISTS set_timestamp_inventory_items ON inventory_items;
 CREATE TRIGGER set_timestamp_inventory_items
 BEFORE UPDATE ON inventory_items
 FOR EACH ROW
 EXECUTE FUNCTION update_modified_column();
 
+DROP TRIGGER IF EXISTS set_timestamp_suppliers ON suppliers;
 CREATE TRIGGER set_timestamp_suppliers
 BEFORE UPDATE ON suppliers
 FOR EACH ROW
 EXECUTE FUNCTION update_modified_column();
 
+DROP TRIGGER IF EXISTS set_timestamp_customers ON customers;
 CREATE TRIGGER set_timestamp_customers
 BEFORE UPDATE ON customers
 FOR EACH ROW
 EXECUTE FUNCTION update_modified_column();
 
+DROP TRIGGER IF EXISTS set_timestamp_purchase_orders ON purchase_orders;
 CREATE TRIGGER set_timestamp_purchase_orders
 BEFORE UPDATE ON purchase_orders
 FOR EACH ROW
 EXECUTE FUNCTION update_modified_column();
 
+DROP TRIGGER IF EXISTS set_timestamp_sales_orders ON sales_orders;
 CREATE TRIGGER set_timestamp_sales_orders
 BEFORE UPDATE ON sales_orders
 FOR EACH ROW
@@ -170,6 +200,7 @@ ALTER TABLE purchase_orders ENABLE ROW LEVEL SECURITY;
 ALTER TABLE purchase_order_items ENABLE ROW LEVEL SECURITY;
 ALTER TABLE sales_orders ENABLE ROW LEVEL SECURITY;
 ALTER TABLE sales_order_items ENABLE ROW LEVEL SECURITY;
+ALTER TABLE allowed_emails ENABLE ROW LEVEL SECURITY;
 
 -- Membuat kebijakan untuk setiap tabel agar pengguna hanya dapat melihat dan mengedit data mereka sendiri
 CREATE POLICY accounting_transactions_policy ON accounting_transactions
@@ -227,6 +258,10 @@ CREATE POLICY sales_order_items_policy ON sales_order_items
         WHERE so.id = sales_order_items.sales_order_id
         AND so.user_id = auth.uid()
     ));
+
+CREATE POLICY allowed_emails_policy ON allowed_emails
+    USING (TRUE)
+    WITH CHECK (FALSE);
 
 -- Membuat beberapa data contoh untuk kategori akuntansi
 INSERT INTO accounting_categories (name, type, user_id)
